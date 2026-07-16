@@ -1,0 +1,906 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Marzas Labs — Digital Solutions. Ingeniería de software a medida: CRMs, páginas web, aplicaciones y productos SaaS.">
+<title>Marzas Labs — Digital Solutions</title>
+<style>
+:root{
+/* Default: white background, blue + green details */
+--bg:#FFFFFF;
+--bg-2:#F1F6FF;
+--surface:#FFFFFF;
+--surface-2:#F4F8FF;
+--line:rgba(18,42,84,.11);
+--ink:#0C1730;
+--muted:#53617D;
+--muted-2:#8593AD;
+--accent:#1E6BFF; /* blue */
+--accent-ink:#FFFFFF;
+--accent-2:#12B886; /* green */
+--glow:rgba(30,107,255,.26);
+--radius:16px;
+--maxw:1180px;
+--mono:"SF Mono",ui-monospace,"Cascadia Mono","Consolas","Segoe UI Mono",monospace;
+--sans:"SF Pro Display","Segoe UI",system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif;
+}
+/* Dark variant (via toggle) */
+:root[data-theme="dark"]{
+--bg:#080D1A;--bg-2:#0C1428;--surface:#101A2F;--surface-2:#15203A;
+--line:rgba(120,150,210,.16);--ink:#EAF1FF;--muted:#9AA8C6;--muted-2:#6C7B98;
+--accent:#4E8CFF;--accent-2:#2DD4A0;--glow:rgba(78,140,255,.32);
+}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+margin:0;background:var(--bg);color:var(--ink);
+font-family:var(--sans);line-height:1.55;
+-webkit-font-smoothing:antialiased;overflow-x:hidden;
+}
+#stars{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;display:block}
+.wrap{position:relative;z-index:2;max-width:var(--maxw);margin:0 auto;padding:0 28px}
+a{color:inherit;text-decoration:none}
+::selection{background:var(--accent);color:#fff}
+
+.eyebrow{
+font-family:var(--mono);font-size:12.5px;letter-spacing:.28em;text-transform:uppercase;
+color:var(--accent);display:inline-flex;align-items:center;gap:10px;
+}
+.eyebrow::before{content:"";width:22px;height:1px;background:var(--accent);opacity:.8}
+
+h1,h2,h3{margin:0;text-wrap:balance;font-weight:640;letter-spacing:-.02em;line-height:1.04}
+
+/* ---------- NAV ---------- */
+header.nav{position:fixed;top:0;left:0;right:0;z-index:50;transition:background .3s,border-color .3s,backdrop-filter .3s}
+header.nav.scrolled{background:color-mix(in srgb,var(--bg) 72%,transparent);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.nav-inner{max-width:var(--maxw);margin:0 auto;padding:16px 28px;display:flex;align-items:center;justify-content:space-between}
+.brand{display:flex;align-items:center;gap:12px;font-weight:680;letter-spacing:-.01em}
+.brand .mark{width:30px;height:30px;position:relative;flex:none}
+.brand .mark svg{display:block}
+.brand small{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.24em;color:var(--muted-2);text-transform:uppercase;font-weight:500;margin-top:1px}
+.brand b{font-size:17px}
+.nav-links{display:flex;gap:30px;align-items:center}
+.nav-links a{font-size:14.5px;color:var(--muted);transition:color .2s}
+.nav-links a:hover{color:var(--ink)}
+.nav-cta{display:inline-flex;align-items:center;gap:8px;padding:10px 18px;border-radius:999px;background:var(--accent);color:#fff;font-weight:640;font-size:14px;transition:transform .2s,box-shadow .2s}
+.nav-cta:hover{transform:translateY(-1px);box-shadow:0 10px 30px -8px var(--glow)}
+.theme-btn{background:transparent;border:1px solid var(--line);color:var(--muted);width:38px;height:38px;border-radius:999px;cursor:pointer;font-size:15px;display:grid;place-items:center;transition:color .2s,border-color .2s}
+.theme-btn:hover{color:var(--ink);border-color:var(--accent)}
+.menu-toggle{display:none}
+
+/* ---------- HERO ---------- */
+.hero{position:relative;padding:190px 0 120px;text-align:center}
+.hero .badge{display:inline-flex;align-items:center;gap:9px;font-family:var(--mono);font-size:12px;letter-spacing:.08em;color:var(--muted);border:1px solid var(--line);background:color-mix(in srgb,var(--surface) 60%,transparent);padding:7px 14px;border-radius:999px;margin-bottom:30px}
+.hero .badge .dot{width:7px;height:7px;border-radius:50%;background:#37E39B;box-shadow:0 0 0 3px rgba(55,227,155,.18)}
+.hero h1{font-size:clamp(42px,7vw,88px);letter-spacing:-.035em}
+.hero h1 .grad{background:linear-gradient(120deg,var(--accent),#3D8BFF 45%,var(--accent-2));-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero .sub{margin:26px auto 0;max-width:600px;font-size:clamp(16px,2vw,19px);color:var(--muted)}
+.hero-cta{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:40px}
+.btn{display:inline-flex;align-items:center;gap:10px;padding:14px 26px;border-radius:999px;font-weight:640;font-size:15px;transition:transform .2s,box-shadow .2s,background .2s,border-color .2s}
+.btn-primary{background:var(--accent);color:#fff}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 16px 40px -12px var(--glow)}
+.btn-ghost{border:1px solid var(--line);color:var(--ink);background:color-mix(in srgb,var(--surface) 50%,transparent)}
+.btn-ghost:hover{border-color:var(--accent);transform:translateY(-2px)}
+.btn-wa{background:var(--accent-2);color:#04120C}
+.btn-wa svg{flex:none}
+.btn-wa:hover{transform:translateY(-2px);box-shadow:0 16px 40px -12px color-mix(in srgb,var(--accent-2) 60%,transparent)}
+
+.hero-metrics{display:flex;gap:44px;justify-content:center;flex-wrap:wrap;margin-top:70px}
+.hero-metrics .m{text-align:center}
+.hero-metrics .m b{display:block;font-size:34px;font-weight:680;letter-spacing:-.02em}
+.hero-metrics .m span{font-family:var(--mono);font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted-2)}
+
+/* ---------- MARQUEE ---------- */
+.strip{border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:26px 0;overflow:hidden;background:color-mix(in srgb,var(--bg-2) 60%,transparent)}
+.strip .label{text-align:center;font-family:var(--mono);font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--muted-2);margin-bottom:20px}
+.marquee{display:flex;gap:56px;width:max-content;animation:scrollx 30s linear infinite}
+.marquee span{font-size:20px;font-weight:600;color:var(--muted);opacity:.72;white-space:nowrap;letter-spacing:-.01em}
+@keyframes scrollx{to{transform:translateX(-50%)}}
+
+/* ---------- SECTION SHELL ---------- */
+section.block{position:relative;padding:120px 0}
+.head{max-width:640px;margin-bottom:56px}
+.head h2{font-size:clamp(30px,4.3vw,50px);margin-top:18px}
+.head p{color:var(--muted);font-size:17px;margin:18px 0 0}
+
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .7s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1)}
+.reveal.in{opacity:1;transform:none}
+
+/* ---------- SERVICES ---------- */
+.svc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.card{position:relative;background:linear-gradient(180deg,var(--surface),var(--surface-2));border:1px solid var(--line);border-radius:var(--radius);padding:28px;overflow:hidden;transition:transform .3s,border-color .3s}
+.card::after{content:"";position:absolute;inset:0;border-radius:inherit;background:radial-gradient(420px circle at var(--mx,50%) var(--my,0%),color-mix(in srgb,var(--accent) 16%,transparent),transparent 60%);opacity:0;transition:opacity .35s;pointer-events:none}
+.card:hover{transform:translateY(-4px);border-color:color-mix(in srgb,var(--accent) 40%,var(--line))}
+.card:hover::after{opacity:1}
+.card .ico{width:46px;height:46px;border-radius:12px;display:grid;place-items:center;background:color-mix(in srgb,var(--accent) 14%,transparent);border:1px solid color-mix(in srgb,var(--accent) 30%,transparent);margin-bottom:20px}
+.card .ico svg{width:22px;height:22px;stroke:var(--accent)}
+.card h3{font-size:20px;margin-bottom:10px}
+.card p{color:var(--muted);font-size:14.5px;margin:0}
+.card .tags{display:flex;flex-wrap:wrap;gap:7px;margin-top:18px}
+.card .tags i{font-style:normal;font-family:var(--mono);font-size:11px;color:var(--muted-2);border:1px solid var(--line);padding:4px 9px;border-radius:6px}
+.card .num{position:absolute;top:24px;right:26px;font-family:var(--mono);font-size:12px;color:var(--muted-2)}
+
+/* ---------- TECH STACK ORBIT ---------- */
+.stack-wrap{display:grid;grid-template-columns:1.05fr 1fr;gap:60px;align-items:center}
+.orbit{position:relative;width:100%;aspect-ratio:1/1;max-width:460px;margin:0 auto}
+.orbit .ring{position:absolute;inset:0;border:1px solid var(--line);border-radius:50%}
+.orbit .r1{inset:14%}.orbit .r2{inset:0}
+.orbit .core{position:absolute;inset:34%;border-radius:50%;background:radial-gradient(circle at 35% 30%,#5FE8C0,var(--accent) 62%,#1550C8);display:grid;place-items:center;box-shadow:0 0 60px -6px var(--glow);animation:pulse 4s ease-in-out infinite}
+.orbit .core b{font-weight:720;font-size:15px;color:#FFFFFF;letter-spacing:-.01em;text-align:center;line-height:1.1}
+@keyframes pulse{0%,100%{box-shadow:0 0 50px -10px var(--glow)}50%{box-shadow:0 0 90px 0 var(--glow)}}
+.spin{position:absolute;inset:0;animation:spin 26s linear infinite}
+.spin.rev{animation-duration:38s;animation-direction:reverse}
+@keyframes spin{to{transform:rotate(360deg)}}
+.chip{position:absolute;top:0;left:50%;transform:translate(-50%,-50%);background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:8px 13px;font-family:var(--mono);font-size:12.5px;font-weight:600;white-space:nowrap;box-shadow:0 8px 24px -12px rgba(0,0,0,.6)}
+.chip .counter{display:inline-block;animation:counter 26s linear infinite}
+.spin.rev .chip .counter{animation-duration:38s;animation-direction:reverse}
+@keyframes counter{to{transform:rotate(-360deg)}}
+.stack-copy .cats{display:flex;flex-direction:column;gap:14px;margin-top:8px}
+.stack-copy .cat{border:1px solid var(--line);border-radius:12px;padding:16px 18px;background:color-mix(in srgb,var(--surface) 55%,transparent)}
+.stack-copy .cat b{font-size:14px}
+.stack-copy .cat .row{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.stack-copy .cat .row i{font-style:normal;font-family:var(--mono);font-size:12px;color:var(--muted);background:var(--surface-2);border:1px solid var(--line);padding:5px 10px;border-radius:7px}
+
+/* ---------- PROCESS ---------- */
+.proc{display:grid;grid-template-columns:repeat(5,1fr);gap:0;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
+.step{padding:30px 24px;border-right:1px solid var(--line);position:relative;background:color-mix(in srgb,var(--surface) 40%,transparent);transition:background .3s}
+.step:last-child{border-right:none}
+.step:hover{background:var(--surface)}
+.step .n{font-family:var(--mono);font-size:12px;color:var(--accent);letter-spacing:.1em}
+.step h3{font-size:18px;margin:14px 0 8px}
+.step p{color:var(--muted);font-size:13.5px;margin:0}
+.step .bar{position:absolute;left:0;bottom:0;height:2px;width:0;background:var(--accent);transition:width .5s}
+.step:hover .bar{width:100%}
+
+/* ---------- STATS BAND ---------- */
+.band{border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:color-mix(in srgb,var(--bg-2) 70%,transparent)}
+.band .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0}
+.band .stat{padding:48px 24px;text-align:center;border-right:1px solid var(--line)}
+.band .stat:last-child{border-right:none}
+.band .stat b{display:block;font-size:44px;font-weight:700;letter-spacing:-.03em;background:linear-gradient(120deg,var(--ink),var(--accent));-webkit-background-clip:text;background-clip:text;color:transparent}
+.band .stat span{font-family:var(--mono);font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted-2)}
+
+/* ---------- CTA ---------- */
+.cta-box{position:relative;text-align:center;border:1px solid var(--line);border-radius:26px;padding:70px 30px;overflow:hidden;background:linear-gradient(180deg,var(--surface),var(--bg-2))}
+.cta-box::before{content:"";position:absolute;top:-40%;left:50%;transform:translateX(-50%);width:70%;height:120%;background:radial-gradient(closest-side,var(--glow),transparent 70%);pointer-events:none}
+.cta-box h2{position:relative;font-size:clamp(30px,4.6vw,52px)}
+.cta-box p{position:relative;color:var(--muted);max-width:480px;margin:20px auto 34px;font-size:17px}
+
+/* ---------- FOOTER ---------- */
+footer{border-top:1px solid var(--line);padding:60px 0 40px;position:relative;z-index:2}
+.foot-grid{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:36px}
+footer h4{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted-2);margin:0 0 16px}
+footer ul{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:11px}
+footer ul a{color:var(--muted);font-size:14.5px;transition:color .2s}
+footer ul a:hover{color:var(--accent)}
+.foot-brand p{color:var(--muted);font-size:14px;max-width:280px;margin:16px 0 0}
+.foot-bottom{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px;margin-top:50px;padding-top:24px;border-top:1px solid var(--line);color:var(--muted-2);font-size:13px;font-family:var(--mono)}
+
+/* ---------- ABOUT / NOSOTROS ---------- */
+.mv-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:56px}
+.mv{position:relative;background:linear-gradient(180deg,var(--surface),var(--surface-2));border:1px solid var(--line);border-radius:var(--radius);padding:34px;overflow:hidden}
+.mv::before{content:"";position:absolute;top:-30%;right:-12%;width:60%;height:120%;background:radial-gradient(closest-side,var(--glow),transparent 70%);opacity:.5;pointer-events:none}
+.mv .ico{width:48px;height:48px;border-radius:12px;display:grid;place-items:center;background:color-mix(in srgb,var(--accent) 14%,transparent);border:1px solid color-mix(in srgb,var(--accent) 30%,transparent);margin-bottom:20px}
+.mv .ico svg{width:23px;height:23px;stroke:var(--accent)}
+.mv .k{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted-2)}
+.mv h3{font-size:23px;margin:6px 0 14px}
+.mv p{color:var(--muted);font-size:15px;margin:0;position:relative;line-height:1.7}
+
+.team-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.member{position:relative;text-align:center;background:linear-gradient(180deg,var(--surface),var(--surface-2));border:1px solid var(--line);border-radius:var(--radius);padding:34px 26px;overflow:hidden;transition:transform .3s,border-color .3s}
+.member:hover{transform:translateY(-4px);border-color:color-mix(in srgb,var(--accent) 40%,var(--line))}
+.member .avatar{width:98px;height:98px;border-radius:50%;margin:0 auto 18px;display:grid;place-items:center;background:radial-gradient(circle at 35% 30%,#5FE8C0,var(--accent) 62%,#1550C8);color:#fff;font-weight:720;font-size:30px;letter-spacing:.01em;box-shadow:0 0 44px -8px var(--glow)}
+.member h3{font-size:19px;margin-bottom:7px}
+.member .role{font-family:var(--mono);font-size:12px;letter-spacing:.05em;color:var(--accent);text-transform:uppercase;font-weight:600}
+.member p{color:var(--muted);font-size:14px;margin:14px 0 0;line-height:1.6}
+.member .tags{display:flex;flex-wrap:wrap;gap:7px;justify-content:center;margin-top:18px}
+.member .tags i{font-style:normal;font-family:var(--mono);font-size:11px;color:var(--muted-2);border:1px solid var(--line);padding:4px 9px;border-radius:6px}
+
+/* ---------- 3D PARTICLE FX (Three.js) ---------- */
+.fx{position:absolute;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;display:block}
+section.block#services,section.block#about,section.block#stack{isolation:isolate}
+
+@media (max-width:940px){
+.nav-links{display:none}
+.mv-grid{grid-template-columns:1fr}
+.team-grid{grid-template-columns:1fr 1fr}
+.svc-grid{grid-template-columns:repeat(2,1fr)}
+.stack-wrap{grid-template-columns:1fr;gap:40px}
+.proc{grid-template-columns:1fr 1fr}
+.step{border-right:1px solid var(--line);border-bottom:1px solid var(--line)}
+.band .grid{grid-template-columns:1fr 1fr}
+.band .stat:nth-child(2){border-right:none}
+.band .stat{border-bottom:1px solid var(--line)}
+.foot-grid{grid-template-columns:1fr 1fr}
+}
+@media (max-width:560px){
+.svc-grid{grid-template-columns:1fr}
+.team-grid{grid-template-columns:1fr}
+.proc{grid-template-columns:1fr}
+.band .grid{grid-template-columns:1fr 1fr}
+.hero{padding-top:140px}
+.foot-grid{grid-template-columns:1fr 1fr}
+}
+@media (prefers-reduced-motion:reduce){
+*{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.1ms!important}
+.reveal{opacity:1;transform:none}
+}
+</style>
+
+</head>
+<body>
+<canvas id="stars"></canvas>
+
+<header class="nav" id="nav">
+<div class="nav-inner">
+<a class="brand" href="#top">
+<span class="mark" aria-hidden="true">
+<svg width="30" height="30" viewBox="0 0 30 30" fill="none">
+<circle cx="15" cy="15" r="13" stroke="var(--accent)" stroke-width="1.4" opacity=".5"/>
+<circle cx="15" cy="15" r="6.5" fill="var(--accent)"/>
+<circle cx="26" cy="9" r="1.8" fill="var(--accent-2)"/>
+</svg>
+</span>
+<span><b>Marzas Labs</b><small>Digital Solutions</small></span>
+</a>
+<nav class="nav-links">
+<a href="#services">Servicios</a>
+<a href="#about">Nosotros</a>
+<a href="#stack">Stack</a>
+<a href="#process">Proceso</a>
+<a href="#work">Resultados</a>
+<a href="#contact">Contacto</a>
+</nav>
+<div style="display:flex;gap:12px;align-items:center">
+<button class="theme-btn" id="theme" aria-label="Cambiar tema">◐</button>
+<a class="nav-cta" href="https://wa.me/573126865163?text=Hola%20Marzas%20Labs%2C%20quiero%20cotizar%20un%20proyecto." target="_blank" rel="noopener">Cotizar por WhatsApp</a>
+</div>
+</div>
+</header>
+
+<a id="top"></a>
+<main>
+<!-- HERO -->
+<section class="hero">
+<div class="wrap">
+<span class="badge"><span class="dot"></span> Aceptando nuevos proyectos · Q3 2026</span>
+<h1>Construimos el <span class="grad">software</span><br>que impulsa tu negocio</h1>
+<p class="sub">Marzas Labs es un equipo de ingeniería que diseña y desarrolla CRMs, plataformas web y software a medida — de la idea al despliegue en producción.</p>
+<div class="hero-cta">
+<a class="btn btn-primary" href="https://wa.me/573126865163?text=Hola%20Marzas%20Labs%2C%20quiero%20cotizar%20un%20proyecto." target="_blank" rel="noopener">Cotizar por WhatsApp →</a>
+<a class="btn btn-ghost" href="#services">Ver servicios</a>
+</div>
+<div class="hero-metrics">
+<div class="m"><b data-count="120" data-suffix="+">0</b><span>Proyectos entregados</span></div>
+<div class="m"><b data-count="98" data-suffix="%">0</b><span>Clientes recurrentes</span></div>
+<div class="m"><b data-count="14" data-suffix="d">0</b><span>Al primer entregable</span></div>
+</div>
+</div>
+</section>
+
+<!-- MARQUEE -->
+<div class="strip">
+<div class="label">Tecnologías que dominamos</div>
+<div class="marquee" id="marq">
+<span>React</span><span>Next.js</span><span>Node.js</span><span>Python</span><span>PostgreSQL</span><span>TypeScript</span><span>AWS</span><span>Docker</span><span>React Native</span><span>GraphQL</span><span>Django</span><span>Redis</span>
+<span>React</span><span>Next.js</span><span>Node.js</span><span>Python</span><span>PostgreSQL</span><span>TypeScript</span><span>AWS</span><span>Docker</span><span>React Native</span><span>GraphQL</span><span>Django</span><span>Redis</span>
+</div>
+</div>
+
+<!-- ENGINEERING SERVICE PLATFORMS -->
+<section class="block" id="services">
+<canvas class="fx" data-fx="services" aria-hidden="true"></canvas>
+<div class="wrap">
+<div class="head reveal">
+<span class="eyebrow">Engineering Service Platforms</span>
+<h2>Plataformas de servicio de ingeniería</h2>
+<p>Un solo equipo para todo tu ciclo de producto. Elegimos la herramienta correcta para cada reto y la llevamos a producción con calidad de ingeniería.</p>
+</div>
+<div class="svc-grid">
+<article class="card reveal"><span class="num">01</span>
+<div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.7"><path d="M4 7h16M4 12h16M4 17h10" stroke-linecap="round"/><circle cx="18" cy="17" r="2.4"/></svg></div>
+<h3>CRMs a medida</h3>
+<p>Sistemas de gestión de clientes diseñados a tu proceso comercial: pipelines, automatizaciones, reportes y permisos por rol.</p>
+<div class="tags"><i>Ventas</i><i>Automatización</i><i>Dashboards</i></div>
+</article>
+<article class="card reveal"><span class="num">02</span>
+<div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.7"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 9h18M8 21h8" stroke-linecap="round"/></svg></div>
+<h3>Páginas y experiencias web</h3>
+<p>Sitios corporativos, landing pages y portales que cargan rápido, posicionan en buscadores y convierten visitantes en clientes.</p>
+<div class="tags"><i>SEO</i><i>Performance</i><i>UX/UI</i></div>
+</article>
+<article class="card reveal"><span class="num">03</span>
+<div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.7"><path d="M8 6l-5 6 5 6M16 6l5 6-5 6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+<h3>Software a medida</h3>
+<p>Cualquier tipo de desarrollo de software: aplicaciones internas, integraciones, APIs y automatización de procesos de negocio.</p>
+<div class="tags"><i>APIs</i><i>Integraciones</i><i>ERP</i></div>
+</article>
+<article class="card reveal"><span class="num">04</span>
+<div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.7"><rect x="6" y="2.5" width="12" height="19" rx="3"/><path d="M11 18h2" stroke-linecap="round"/></svg></div>
+<h3>Aplicaciones móviles</h3>
+<p>Apps nativas y multiplataforma para iOS y Android, con la misma base de código y una experiencia fluida en cada dispositivo.</p>
+<div class="tags"><i>iOS</i><i>Android</i><i>React Native</i></div>
+</article>
+<article class="card reveal"><span class="num">05</span>
+<div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.7"><path d="M12 3l7 4v5c0 5-3 7.5-7 9-4-1.5-7-4-7-9V7z" stroke-linejoin="round"/><path d="M9.5 12l2 2 3.5-4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+<h3>Productos SaaS</h3>
+<p>Del MVP a la escala: arquitectura multi-tenant, facturación por suscripción, paneles de analítica y despliegue continuo.</p>
+<div class="tags"><i>Multi-tenant</i><i>Billing</i><i>Cloud</i></div>
+</article>
+<article class="card reveal"><span class="num">06</span>
+<div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.7"><circle cx="12" cy="12" r="3"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3M6 6l2 2M16 16l2 2M18 6l-2 2M8 16l-2 2" stroke-linecap="round"/></svg></div>
+<h3>Automatización con IA</h3>
+<p>Integramos modelos de lenguaje y agentes en tus flujos: soporte, generación de contenido, análisis de datos y más.</p>
+<div class="tags"><i>LLMs</i><i>Agentes</i><i>RAG</i></div>
+</article>
+</div>
+</div>
+</section>
+
+<!-- NOSOTROS / ABOUT -->
+<section class="block" id="about">
+<canvas class="fx" data-fx="about" aria-hidden="true"></canvas>
+<div class="wrap">
+<div class="head reveal">
+<span class="eyebrow">Nosotros</span>
+<h2>Quiénes somos</h2>
+<p>Somos un equipo de ingeniería apasionado por convertir ideas en productos digitales que generan valor real. Estos son los principios que nos guían y las personas detrás de Marzas Labs.</p>
+</div>
+
+<div class="mv-grid">
+<div class="mv reveal">
+<div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.7"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r="1"/></svg></div>
+<span class="k">Misión</span>
+<h3>Nuestra misión</h3>
+<p>Transformar las ideas de nuestros clientes en soluciones digitales reales, desarrollando software innovador, funcional y de alta calidad que impulse el crecimiento de personas, emprendimientos y empresas mediante tecnología a la medida.</p>
+</div>
+<div class="mv reveal">
+<div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.7"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z" stroke-linejoin="round"/><circle cx="12" cy="12" r="3"/></svg></div>
+<span class="k">Visión</span>
+<h3>Nuestra visión</h3>
+<p>Consolidarnos como una empresa de desarrollo de software reconocida a nivel internacional, destacándonos por la innovación, la calidad y la confianza, llevando soluciones tecnológicas que generen impacto y crecimiento en organizaciones de todo el mundo.</p>
+</div>
+</div>
+
+<div class="head reveal" style="margin-bottom:36px">
+<span class="eyebrow">Equipo</span>
+<h2 style="font-size:clamp(26px,3.6vw,40px)">Las personas detrás del código</h2>
+</div>
+
+<div class="team-grid">
+<article class="member reveal">
+<div class="avatar" aria-hidden="true">CA</div>
+<h3>Cristhian Camilo Arzayus León</h3>
+<div class="role">CEO &amp; Scrum Master</div>
+<p>Fundador y líder de Marzas Labs. Dirige al equipo como Scrum Master y manager, y es el primer punto de contacto con cada cliente, asegurando que su visión se traduzca en resultados.</p>
+<div class="tags"><i>Liderazgo</i><i>Scrum Master</i><i>Atención al cliente</i><i>Team Manager</i></div>
+</article>
+<article class="member reveal">
+<div class="avatar" aria-hidden="true">MA</div>
+<h3>Mario Alejandro Alzate López</h3>
+<div class="role">CEO &amp; Software / Hardware</div>
+<p>Co-fundador con más de 10 años de experiencia en desarrollo de software. Especialista en hardware y robótica —programa Raspberry Pi y todo tipo de robots— y en la creación de automatizaciones y bots.</p>
+<div class="tags"><i>Software</i><i>Hardware</i><i>Robótica</i><i>Raspberry Pi</i><i>Automatización</i><i>Bots</i></div>
+</article>
+<article class="member reveal">
+<div class="avatar" aria-hidden="true">JJ</div>
+<h3>Juan Martín Jiménez Sardi</h3>
+<div class="role">CTO · Ingeniero Multimedia</div>
+<p>Chief Technology Officer de Marzas Labs e ingeniero en multimedia con más de 10 años de experiencia en desarrollo web. Especialista en experiencias web y en la creación de aplicaciones nativas de alto rendimiento.</p>
+<div class="tags"><i>Desarrollo Web</i><i>Apps Nativas</i><i>Multimedia</i><i>UX/UI</i></div>
+</article>
+</div>
+</div>
+</section>
+
+<!-- TECHNOLOGY STACK -->
+<section class="block" id="stack">
+<canvas class="fx" data-fx="stack" aria-hidden="true"></canvas>
+<div class="wrap">
+<div class="stack-wrap">
+<div class="orbit reveal" aria-hidden="true">
+<div class="ring r2"></div>
+<div class="ring r1"></div>
+<div class="core"><b>Marzas<br>Stack</b></div>
+<div class="spin" id="ring-outer"></div>
+<div class="spin rev" id="ring-inner"></div>
+</div>
+<div class="stack-copy reveal">
+<span class="eyebrow">Technology Stack</span>
+<h2 style="font-size:clamp(28px,4vw,44px);margin:16px 0 8px">Un stack moderno, probado en producción</h2>
+<p style="color:var(--muted);margin:0 0 6px">Trabajamos con tecnología estándar de la industria para que tu producto sea rápido, seguro y fácil de mantener en el tiempo.</p>
+<div class="cats">
+<div class="cat"><b>Frontend</b><div class="row"><i>React</i><i>Next.js</i><i>TypeScript</i><i>Tailwind</i></div></div>
+<div class="cat"><b>Backend</b><div class="row"><i>Node.js</i><i>Python</i><i>Django</i><i>GraphQL</i></div></div>
+<div class="cat"><b>Datos e infraestructura</b><div class="row"><i>PostgreSQL</i><i>Redis</i><i>AWS</i><i>Docker</i></div></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- PROCESS -->
+<section class="block" id="process">
+<div class="wrap">
+<div class="head reveal">
+<span class="eyebrow">Cómo trabajamos</span>
+<h2>De la idea al lanzamiento en 5 fases</h2>
+<p>Un proceso transparente donde ves avances reales cada semana, sin sorpresas ni cajas negras.</p>
+</div>
+<div class="proc reveal">
+<div class="step"><div class="n">01</div><h3>Descubrimiento</h3><p>Entendemos tu negocio, objetivos y usuarios para definir el alcance correcto.</p><div class="bar"></div></div>
+<div class="step"><div class="n">02</div><h3>Diseño</h3><p>Prototipos y arquitectura técnica antes de escribir una sola línea de código.</p><div class="bar"></div></div>
+<div class="step"><div class="n">03</div><h3>Desarrollo</h3><p>Sprints cortos con entregas continuas que puedes probar en cada iteración.</p><div class="bar"></div></div>
+<div class="step"><div class="n">04</div><h3>Lanzamiento</h3><p>Despliegue en producción, pruebas y monitoreo para un arranque sin fricción.</p><div class="bar"></div></div>
+<div class="step"><div class="n">05</div><h3>Escala</h3><p>Soporte, mejoras y optimización continua a medida que tu producto crece.</p><div class="bar"></div></div>
+</div>
+</div>
+</section>
+
+<!-- STATS BAND -->
+<div class="band" id="work">
+<div class="wrap" style="padding:0">
+<div class="grid">
+<div class="stat"><b data-count="120" data-suffix="+">0</b><span>Proyectos</span></div>
+<div class="stat"><b data-count="45" data-suffix="+">0</b><span>Clientes activos</span></div>
+<div class="stat"><b data-count="8" data-suffix="">0</b><span>Años de experiencia</span></div>
+<div class="stat"><b data-count="99" data-suffix="%">0</b><span>Uptime promedio</span></div>
+</div>
+</div>
+</div>
+
+<!-- CTA -->
+<section class="block" id="contact">
+<div class="wrap">
+<div class="cta-box reveal">
+<span class="eyebrow" style="position:relative;justify-content:center">Cotiza tu proyecto</span>
+<h2 style="margin-top:16px">¿Listo para cotizar tu proyecto?</h2>
+<p>Escríbenos por WhatsApp y te enviamos una cotización clara en menos de 24 horas. Cuéntanos qué quieres construir.</p>
+<a class="btn btn-wa" href="https://wa.me/573126865163?text=Hola%20Marzas%20Labs%2C%20quiero%20cotizar%20un%20proyecto." target="_blank" rel="noopener" style="position:relative">
+<svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M17.5 14.4c-.3-.15-1.75-.86-2-.96-.27-.1-.47-.15-.66.14-.2.3-.76.96-.93 1.15-.17.2-.34.22-.63.08-.3-.15-1.25-.46-2.38-1.47-.88-.78-1.47-1.75-1.64-2.05-.17-.3-.02-.46.13-.6.13-.14.3-.35.44-.53.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.66-1.6-.9-2.18-.24-.57-.48-.5-.66-.5h-.57c-.2 0-.52.07-.8.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.88 1.22 3.08c.15.2 2.1 3.2 5.08 4.49.71.3 1.26.49 1.7.63.71.23 1.36.2 1.87.12.57-.08 1.75-.71 2-1.4.25-.69.25-1.28.17-1.4-.07-.13-.27-.2-.57-.35z"/><path d="M12 2a10 10 0 0 0-8.6 15.06L2 22l5.06-1.33A10 10 0 1 0 12 2zm0 18.2c-1.5 0-2.98-.4-4.26-1.16l-.3-.18-3 .79.8-2.93-.2-.31A8.2 8.2 0 1 1 12 20.2z"/></svg>
+Cotizar por WhatsApp
+</a>
+<div style="position:relative;margin-top:16px;font-family:var(--mono);font-size:13px;color:var(--muted)">o al <a href="https://wa.me/573126865163" target="_blank" rel="noopener" style="color:var(--accent-2);font-weight:600">312&nbsp;686&nbsp;5163</a></div>
+</div>
+</div>
+</section>
+</main>
+
+<footer>
+<div class="wrap">
+<div class="foot-grid">
+<div class="foot-brand">
+<a class="brand" href="#top">
+<span class="mark" aria-hidden="true">
+<svg width="30" height="30" viewBox="0 0 30 30" fill="none">
+<circle cx="15" cy="15" r="13" stroke="var(--accent)" stroke-width="1.4" opacity=".5"/>
+<circle cx="15" cy="15" r="6.5" fill="var(--accent)"/>
+<circle cx="26" cy="9" r="1.8" fill="var(--accent-2)"/>
+</svg>
+</span>
+<span><b>Marzas Labs</b><small>Digital Solutions</small></span>
+</a>
+<p>Ingeniería de software a medida. Diseñamos, construimos y escalamos productos digitales.</p>
+</div>
+<div><h4>Servicios</h4><ul><li><a href="#services">CRMs</a></li><li><a href="#services">Páginas web</a></li><li><a href="#services">Software a medida</a></li><li><a href="#services">Apps móviles</a></li></ul></div>
+<div><h4>Empresa</h4><ul><li><a href="#about">Nosotros</a></li><li><a href="#stack">Stack</a></li><li><a href="#process">Proceso</a></li><li><a href="#work">Resultados</a></li><li><a href="#contact">Contacto</a></li></ul></div>
+<div><h4>Contacto</h4><ul><li><a href="https://wa.me/573126865163?text=Hola%20Marzas%20Labs%2C%20quiero%20cotizar%20un%20proyecto." target="_blank" rel="noopener">WhatsApp: 312 686 5163</a></li><li><a href="mailto:hola@marzaslabs.com">hola@marzaslabs.com</a></li><li><a href="#contact">Cotizar proyecto</a></li></ul></div>
+</div>
+<div class="foot-bottom">
+<span>© 2026 Marzas Labs · Digital Solutions</span>
+<span>Diseñado y construido con precisión de ingeniería</span>
+</div>
+</div>
+</footer>
+
+<script>
+(function(){
+/* ---------- SCROLL-REACTIVE PARTICLE FIELD (stellar) ---------- */
+var canvas=document.getElementById('stars');
+var ctx=canvas.getContext('2d');
+var DPR=Math.min(window.devicePixelRatio||1,2);
+var W,H,particles=[];
+var reduce=window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+
+function accentColors(){
+var light=getComputedStyle(document.documentElement).getPropertyValue('--bg').trim().indexOf('F')===1 || document.documentElement.getAttribute('data-theme')==='light';
+return light;
+}
+
+function resize(){
+W=canvas.width=Math.floor(innerWidth*DPR);
+H=canvas.height=Math.floor(innerHeight*DPR);
+canvas.style.width=innerWidth+'px';
+canvas.style.height=innerHeight+'px';
+build();
+}
+function build(){
+var count=Math.round((innerWidth*innerHeight)/9000);
+count=Math.max(60,Math.min(240,count));
+particles=[];
+for(var i=0;i<count;i++){
+var depth=Math.random(); // 0 far .. 1 near
+particles.push({
+x:Math.random()*W,
+y:Math.random()*H,
+z:depth,
+r:(depth*1.9+0.35)*DPR,
+vx:(Math.random()-0.5)*0.05*DPR,
+vy:(Math.random()-0.5)*0.05*DPR,
+tw:Math.random()*Math.PI*2,
+col:(function(){var r=Math.random(); return r<0.13?'blue':(r<0.24?'green':'neutral');})()
+});
+}
+}
+
+var lastScroll=window.scrollY||0, scrollVel=0;
+window.addEventListener('scroll',function(){
+var y=window.scrollY||0;
+scrollVel=(y-lastScroll);
+lastScroll=y;
+},{passive:true});
+
+// pointer parallax
+var pointer={x:0,y:0,tx:0,ty:0};
+window.addEventListener('mousemove',function(e){
+pointer.tx=(e.clientX/innerWidth-0.5);
+pointer.ty=(e.clientY/innerHeight-0.5);
+},{passive:true});
+
+function draw(){
+ctx.clearRect(0,0,W,H);
+var light=document.documentElement.getAttribute('data-theme')!=='dark';
+pointer.x+=(pointer.tx-pointer.x)*0.05;
+pointer.y+=(pointer.ty-pointer.y)*0.05;
+scrollVel*=0.90; // decay
+
+// connective faint lines for near particles
+for(var i=0;i<particles.length;i++){
+var p=particles[i];
+// motion: base drift + scroll-driven vertical push (parallax by depth) + pointer parallax
+p.x+=p.vx + pointer.x*p.z*1.4*DPR;
+p.y+=p.vy - scrollVel*(0.12+p.z*0.55)*DPR + pointer.y*p.z*1.4*DPR;
+
+// wrap
+if(p.y<-10)p.y=H+10; else if(p.y>H+10)p.y=-10;
+if(p.x<-10)p.x=W+10; else if(p.x>W+10)p.x=-10;
+
+p.tw+=0.02;
+var tw=0.6+Math.sin(p.tw)*0.4;
+var speedBlur=Math.min(Math.abs(scrollVel)*p.z*0.5,14);
+
+if(p.col==='blue'){
+ctx.fillStyle='rgba(30,107,255,'+(0.5+p.z*0.5)*tw+')';
+}else if(p.col==='green'){
+ctx.fillStyle='rgba(18,184,134,'+(0.5+p.z*0.5)*tw+')';
+}else if(light){
+ctx.fillStyle='rgba(60,90,150,'+(0.22+p.z*0.45)*tw+')';
+}else{
+ctx.fillStyle='rgba(200,220,255,'+(0.35+p.z*0.6)*tw+')';
+}
+
+if(speedBlur>1.2){
+// streak when scrolling fast
+ctx.save();
+ctx.strokeStyle=ctx.fillStyle;
+ctx.lineWidth=p.r;
+ctx.lineCap='round';
+var dir=scrollVel>0?-1:1;
+ctx.beginPath();
+ctx.moveTo(p.x,p.y);
+ctx.lineTo(p.x,p.y+dir*speedBlur*DPR);
+ctx.stroke();
+ctx.restore();
+}else{
+ctx.beginPath();
+ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+ctx.fill();
+}
+}
+requestAnimationFrame(draw);
+}
+
+resize();
+window.addEventListener('resize',resize);
+if(!reduce) requestAnimationFrame(draw);
+else { // static field for reduced motion
+(function(){ var l=document.documentElement.getAttribute('data-theme')!=='dark'; for(var i=0;i<particles.length;i++){var p=particles[i];ctx.fillStyle=p.col==='blue'?'rgba(30,107,255,.6)':(p.col==='green'?'rgba(18,184,134,.6)':(l?'rgba(60,90,150,.35)':'rgba(200,220,255,.5)'));ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fill();}})();
+}
+
+/* ---------- TECH STACK ORBIT CHIPS ---------- */
+var outer=['React','Node.js','PostgreSQL','AWS','Python','GraphQL','Docker'];
+var inner=['Next.js','TypeScript','Redis','Django'];
+function placeChips(el,list,radiusPct){
+if(!el)return;
+list.forEach(function(name,i){
+var ang=(i/list.length)*Math.PI*2;
+var chip=document.createElement('div');
+chip.className='chip';
+chip.innerHTML='<span class="counter">'+name+'</span>';
+var r=radiusPct; // percent from center
+var x=50+Math.cos(ang-Math.PI/2)*r;
+var y=50+Math.sin(ang-Math.PI/2)*r;
+chip.style.left=x+'%';
+chip.style.top=y+'%';
+chip.style.transform='translate(-50%,-50%)';
+el.appendChild(chip);
+});
+}
+placeChips(document.getElementById('ring-outer'),outer,50);
+placeChips(document.getElementById('ring-inner'),inner,31);
+
+/* ---------- REVEAL ON SCROLL ---------- */
+var io=new IntersectionObserver(function(entries){
+entries.forEach(function(e){ if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);} });
+},{threshold:0.14});
+document.querySelectorAll('.reveal').forEach(function(el){io.observe(el);});
+
+/* ---------- COUNT UP ---------- */
+function countUp(el){
+var target=+el.getAttribute('data-count');
+var suffix=el.getAttribute('data-suffix')||'';
+var start=performance.now(),dur=1400;
+function tick(now){
+var t=Math.min((now-start)/dur,1);
+var eased=1-Math.pow(1-t,3);
+el.textContent=Math.round(target*eased)+suffix;
+if(t<1)requestAnimationFrame(tick);
+}
+requestAnimationFrame(tick);
+}
+var cio=new IntersectionObserver(function(entries){
+entries.forEach(function(e){ if(e.isIntersecting){countUp(e.target);cio.unobserve(e.target);} });
+},{threshold:0.5});
+document.querySelectorAll('[data-count]').forEach(function(el){cio.observe(el);});
+
+/* ---------- CARD SPOTLIGHT ---------- */
+document.querySelectorAll('.card').forEach(function(c){
+c.addEventListener('mousemove',function(e){
+var r=c.getBoundingClientRect();
+c.style.setProperty('--mx',(e.clientX-r.left)+'px');
+c.style.setProperty('--my',(e.clientY-r.top)+'px');
+});
+});
+
+/* ---------- NAV SCROLLED STATE ---------- */
+var nav=document.getElementById('nav');
+window.addEventListener('scroll',function(){
+if((window.scrollY||0)>30)nav.classList.add('scrolled'); else nav.classList.remove('scrolled');
+},{passive:true});
+
+/* ---------- THEME TOGGLE ---------- */
+var tbtn=document.getElementById('theme');
+tbtn.addEventListener('click',function(){
+var cur=document.documentElement.getAttribute('data-theme');
+var next = cur==='dark' ? 'light' : 'dark';
+document.documentElement.setAttribute('data-theme',next);
+});
+})();
+</script>
+
+<!-- ===== THREE.JS REACTIVE PARTICLE FIELDS (services / about / stack) ===== -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(function(){
+if(!window.THREE){return;}
+var reduce=window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+
+/* brand palette: blue + green + soft blue */
+var PALETTE=[
+new THREE.Color('#1E6BFF'),
+new THREE.Color('#4E8CFF'),
+new THREE.Color('#12B886'),
+new THREE.Color('#2DD4A0'),
+new THREE.Color('#7FA8FF')
+];
+
+/* soft round sprite so points are glowing dots, not squares */
+function makeSprite(){
+var c=document.createElement('canvas');c.width=c.height=64;
+var g=c.getContext('2d');
+var grd=g.createRadialGradient(32,32,0,32,32,32);
+grd.addColorStop(0,'rgba(255,255,255,1)');
+grd.addColorStop(0.25,'rgba(255,255,255,.85)');
+grd.addColorStop(1,'rgba(255,255,255,0)');
+g.fillStyle=grd;g.beginPath();g.arc(32,32,32,0,Math.PI*2);g.fill();
+return new THREE.CanvasTexture(c);
+}
+var SPRITE=makeSprite();
+
+/* ---- shape generators: fill Float32Array(n*3), scaled to R ---- */
+var Shapes={
+sphere:function(a,n,R){
+for(var i=0;i<n;i++){
+var u=Math.random(),v=Math.random();
+var th=2*Math.PI*u,ph=Math.acos(2*v-1),r=R*(0.92+Math.random()*0.08);
+a[i*3]=r*Math.sin(ph)*Math.cos(th);
+a[i*3+1]=r*Math.sin(ph)*Math.sin(th);
+a[i*3+2]=r*Math.cos(ph);
+}
+},
+torus:function(a,n,R){
+var tube=R*0.34;
+for(var i=0;i<n;i++){
+var p=Math.random()*Math.PI*2,q=Math.random()*Math.PI*2,rr=R*0.82+tube*Math.cos(q);
+a[i*3]=rr*Math.cos(p);
+a[i*3+1]=tube*Math.sin(q);
+a[i*3+2]=rr*Math.sin(p);
+}
+},
+ring:function(a,n,R){
+for(var i=0;i<n;i++){
+var ang=Math.random()*Math.PI*2,rr=R*(0.55+0.45*Math.random());
+a[i*3]=rr*Math.cos(ang);
+a[i*3+1]=(Math.random()-0.5)*R*0.12;
+a[i*3+2]=rr*Math.sin(ang);
+}
+},
+wave:function(a,n,R){
+var s=Math.ceil(Math.sqrt(n));
+for(var i=0;i<n;i++){
+var gx=i%s,gy=(i/s)|0;
+var x=(gx/(s-1)-0.5)*2*R,z=(gy/(s-1)-0.5)*2*R;
+a[i*3]=x;
+a[i*3+1]=Math.sin(x*0.16)*Math.cos(z*0.16)*R*0.30;
+a[i*3+2]=z;
+}
+},
+helix:function(a,n,R){
+for(var i=0;i<n;i++){
+var t=i/n,ang=t*Math.PI*2*4,strand=(i%2)?Math.PI:0;
+a[i*3]=Math.cos(ang+strand)*R*0.55;
+a[i*3+1]=(t-0.5)*2*R;
+a[i*3+2]=Math.sin(ang+strand)*R*0.55;
+}
+},
+galaxy:function(a,n,R){
+for(var i=0;i<n;i++){
+var arm=i%3,t=Math.sqrt(Math.random());
+var ang=t*Math.PI*3+arm*(Math.PI*2/3)+(Math.random()-0.5)*0.5;
+var rr=t*R;
+a[i*3]=Math.cos(ang)*rr;
+a[i*3+1]=(Math.random()-0.5)*R*0.14*(1-t);
+a[i*3+2]=Math.sin(ang)*rr;
+}
+},
+cube:function(a,n,R){
+var h=R*0.78;
+for(var i=0;i<n;i++){
+var f=(Math.random()*3)|0,s=Math.random()<0.5?-h:h;
+var u=(Math.random()*2-1)*h,v=(Math.random()*2-1)*h;
+if(f===0){a[i*3]=s;a[i*3+1]=u;a[i*3+2]=v;}
+else if(f===1){a[i*3]=u;a[i*3+1]=s;a[i*3+2]=v;}
+else{a[i*3]=u;a[i*3+1]=v;a[i*3+2]=s;}
+}
+}
+};
+
+var SETS={
+services:['wave','torus','ring'],
+about:['sphere','galaxy','helix'],
+stack:['helix','torus','cube']
+};
+
+function Field(canvas){
+var key=canvas.getAttribute('data-fx');
+var names=SETS[key]||['sphere','torus'];
+var N=(innerWidth<640)?750:1350;
+var R=28;
+
+var renderer=new THREE.WebGLRenderer({canvas:canvas,alpha:true,antialias:true});
+renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,1.75));
+var scene=new THREE.Scene();
+var camera=new THREE.PerspectiveCamera(60,1,0.1,1000);
+camera.position.z=70;
+
+var pos=new Float32Array(N*3),home=new Float32Array(N*3),vel=new Float32Array(N*3),col=new Float32Array(N*3);
+var targets=names.map(function(nm){var t=new Float32Array(N*3);Shapes[nm](t,N,R);return t;});
+var shapeIndex=0;
+home.set(targets[0]);pos.set(targets[0]);
+for(var i=0;i<N;i++){var c=PALETTE[(Math.random()*PALETTE.length)|0];col[i*3]=c.r;col[i*3+1]=c.g;col[i*3+2]=c.b;}
+
+var geo=new THREE.BufferGeometry();
+geo.setAttribute('position',new THREE.BufferAttribute(pos,3));
+geo.setAttribute('color',new THREE.BufferAttribute(col,3));
+var mat=new THREE.PointsMaterial({size:1.35,map:SPRITE,vertexColors:true,transparent:true,opacity:0.92,depthWrite:false,depthTest:false,blending:THREE.NormalBlending,sizeAttenuation:true});
+var points=new THREE.Points(geo,mat);
+scene.add(points);
+
+var mouse={wx:0,wy:0,active:false,halfW:0,halfH:0};
+var tmp=new THREE.Vector3(),iq=new THREE.Quaternion();
+
+function sizeTo(){
+var w=canvas.clientWidth||canvas.parentElement.clientWidth;
+var h=canvas.clientHeight||canvas.parentElement.clientHeight;
+if(!w||!h)return;
+renderer.setSize(w,h,false);
+camera.aspect=w/h;camera.updateProjectionMatrix();
+mouse.halfH=Math.tan(camera.fov*Math.PI/360)*camera.position.z;
+mouse.halfW=mouse.halfH*camera.aspect;
+}
+
+var section=canvas.parentElement;
+section.addEventListener('pointermove',function(e){
+var r=canvas.getBoundingClientRect();
+var nx=((e.clientX-r.left)/r.width)*2-1;
+var ny=-(((e.clientY-r.top)/r.height)*2-1);
+mouse.wx=nx*mouse.halfW;mouse.wy=ny*mouse.halfH;mouse.active=true;
+},{passive:true});
+section.addEventListener('pointerleave',function(){mouse.active=false;});
+
+var lastCycle=performance.now();
+this.active=false;
+this.resize=sizeTo;
+
+this.render=function(now){
+if(now-lastCycle>6500){shapeIndex=(shapeIndex+1)%targets.length;lastCycle=now;}
+var tgt=targets[shapeIndex];
+
+points.rotation.y+=0.0018;
+points.rotation.x=Math.sin(now*0.00018)*0.14;
+
+/* mouse into local space (undo group rotation) */
+iq.copy(points.quaternion).invert();
+var lmx=0,lmy=0,lmz=0;
+if(mouse.active){
+tmp.set(mouse.wx,mouse.wy,0).applyQuaternion(iq);
+lmx=tmp.x;lmy=tmp.y;lmz=tmp.z;
+}
+var k=0.016,damp=0.87,mR=15,mR2=mR*mR,str=1.9,morph=0.045;
+for(var i=0;i<N;i++){
+var ix=i*3,iy=ix+1,iz=ix+2;
+home[ix]+=(tgt[ix]-home[ix])*morph;
+home[iy]+=(tgt[iy]-home[iy])*morph;
+home[iz]+=(tgt[iz]-home[iz])*morph;
+vel[ix]+=(home[ix]-pos[ix])*k;
+vel[iy]+=(home[iy]-pos[iy])*k;
+vel[iz]+=(home[iz]-pos[iz])*k;
+if(mouse.active){
+var dx=pos[ix]-lmx,dy=pos[iy]-lmy,dz=pos[iz]-lmz;
+var d2=dx*dx+dy*dy+dz*dz;
+if(d2<mR2&&d2>0.0001){
+var d=Math.sqrt(d2),f=(1-d/mR)*str/d;
+vel[ix]+=dx*f;vel[iy]+=dy*f;vel[iz]+=dz*f;
+}
+}
+vel[ix]*=damp;vel[iy]*=damp;vel[iz]*=damp;
+pos[ix]+=vel[ix];pos[iy]+=vel[iy];pos[iz]+=vel[iz];
+}
+geo.attributes.position.needsUpdate=true;
+renderer.render(scene,camera);
+};
+
+this.still=function(){sizeTo();renderer.render(scene,camera);};
+sizeTo();
+}
+
+var canvases=[].slice.call(document.querySelectorAll('canvas.fx'));
+var fields=canvases.map(function(cv){try{return new Field(cv);}catch(e){return null;}}).filter(Boolean);
+
+window.addEventListener('resize',function(){fields.forEach(function(f){f.resize();});},{passive:true});
+
+if(reduce){
+fields.forEach(function(f){f.still();});
+return;
+}
+
+/* only render fields currently in view */
+var io=new IntersectionObserver(function(entries){
+entries.forEach(function(e){
+var f=fields[canvases.indexOf(e.target)];
+if(f){if(e.isIntersecting){f.resize();f.active=true;}else{f.active=false;}}
+});
+},{threshold:0.02});
+canvases.forEach(function(cv){io.observe(cv);});
+
+function loop(now){
+requestAnimationFrame(loop);
+for(var i=0;i<fields.length;i++){if(fields[i].active)fields[i].render(now);}
+}
+requestAnimationFrame(loop);
+})();
+</script>
+</body>
+</html>
