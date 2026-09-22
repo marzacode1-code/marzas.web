@@ -68,7 +68,14 @@ header.nav.scrolled{background:color-mix(in srgb,var(--bg) 72%,transparent);back
 .nav-cta:hover{transform:translateY(-1px);box-shadow:0 10px 30px -8px var(--glow)}
 .theme-btn{background:transparent;border:1px solid var(--line);color:var(--muted);width:38px;height:38px;border-radius:999px;cursor:pointer;font-size:15px;display:grid;place-items:center;transition:color .2s,border-color .2s}
 .theme-btn:hover{color:var(--ink);border-color:var(--accent)}
-.menu-toggle{display:none}
+.menu-toggle{display:none;background:transparent;border:1px solid var(--line);color:var(--ink);width:42px;height:42px;border-radius:12px;cursor:pointer;padding:0;place-items:center;transition:border-color .2s}
+.menu-toggle:hover{border-color:var(--accent)}
+.menu-toggle span{display:block;width:18px;height:2px;background:currentColor;border-radius:2px;transition:transform .28s cubic-bezier(.2,.7,.2,1),opacity .2s}
+.menu-toggle span+span{margin-top:4px}
+header.nav.nav-open .menu-toggle span:nth-child(1){transform:translateY(6px) rotate(45deg)}
+header.nav.nav-open .menu-toggle span:nth-child(2){opacity:0}
+header.nav.nav-open .menu-toggle span:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
+.nav-mobile-cta{display:none}
 
 /* ---------- HERO ---------- */
 .hero{position:relative;padding:190px 0 120px;text-align:center}
@@ -203,7 +210,16 @@ footer ul a:hover{color:var(--accent)}
 section.block#services,section.block#about,section.block#stack{isolation:isolate}
 
 @media (max-width:940px){
-.nav-links{display:none}
+.menu-toggle{display:grid}
+.nav-links{position:absolute;top:100%;left:0;right:0;flex-direction:column;gap:0;align-items:stretch;
+  background:color-mix(in srgb,var(--bg) 94%,transparent);backdrop-filter:blur(16px);
+  border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+  padding:6px 22px 16px;display:none;box-shadow:0 30px 60px -30px rgba(8,20,45,.6)}
+header.nav.nav-open .nav-links{display:flex}
+.nav-links a{padding:15px 4px;border-bottom:1px solid var(--line);font-size:16px}
+.nav-links a:last-child{border-bottom:none}
+.nav-mobile-cta{display:inline-flex;justify-content:center;align-items:center;margin-top:14px;padding:14px 18px !important;
+  border-radius:999px;background:var(--accent);color:#fff !important;font-weight:640;border-bottom:none !important}
 .mv-grid{grid-template-columns:1fr}
 .team-grid{grid-template-columns:1fr 1fr}
 .svc-grid{grid-template-columns:repeat(2,1fr)}
@@ -216,6 +232,7 @@ section.block#services,section.block#about,section.block#stack{isolation:isolate
 .foot-grid{grid-template-columns:1fr 1fr}
 }
 @media (max-width:560px){
+.nav-cta{display:none}
 .svc-grid{grid-template-columns:1fr}
 .team-grid{grid-template-columns:1fr}
 .proc{grid-template-columns:1fr}
@@ -375,10 +392,12 @@ section.block#services,section.block#about,section.block#stack{isolation:isolate
 <a href="#stack">Stack</a>
 <a href="#process">Proceso</a>
 <a href="#contact">Contacto</a>
+<a class="nav-mobile-cta" href="https://wa.me/573126865163?text=Hola%20Marzas%20Labs%2C%20quiero%20cotizar%20un%20proyecto." target="_blank" rel="noopener">Cotizar por WhatsApp</a>
 </nav>
 <div style="display:flex;gap:12px;align-items:center">
 <button class="theme-btn" id="theme" aria-label="Cambiar tema">◐</button>
 <a class="nav-cta" href="https://wa.me/573126865163?text=Hola%20Marzas%20Labs%2C%20quiero%20cotizar%20un%20proyecto." target="_blank" rel="noopener">Cotizar por WhatsApp</a>
+<button class="menu-toggle" id="menuToggle" aria-label="Abrir menú" aria-expanded="false"><span></span><span></span><span></span></button>
 </div>
 </div>
 </header>
@@ -504,6 +523,48 @@ section.block#services,section.block#about,section.block#stack{isolation:isolate
 <p>Agente que responde los mensajes de los suscriptores con el tono del creador, recuerda cada conversación con memoria vectorial y programa envíos masivos de contenido PPV a los fans activos. Trabaja 24/7 sin que nadie escriba una palabra.</p>
 <div class="tags"><i>n8n</i><i>OpenAI</i><i>Supabase</i><i>Memoria vectorial</i></div>
 <span class="go off">Proyecto privado</span>
+</div>
+</article>
+<article class="work reveal">
+<div class="shot">
+<div class="mock">
+<div class="bar"><span></span><span></span><span></span><em>loyaltycali.com</em></div>
+<div class="page">
+<div class="ln w1"></div>
+<div class="ln w2"></div>
+<div class="pill">Agendar valoración</div>
+<div class="thumbs"><i></i><i></i><i></i></div>
+<div class="bubble"><b>Antes / Después</b>Remoción láser con plan por sesiones a tu medida</div>
+</div>
+</div>
+</div>
+<div class="body">
+<span class="kicker"><span class="live"></span>En producción · Cali</span>
+<h3>Loyalty Tattoo Cali — Tatuajes &amp; remoción láser</h3>
+<p>Sitio del estudio de <b>tatuajes y remoción de tatuajes con láser</b>: diseños personalizados, valoración 1:1, planes por sesiones y galería de antes y después, con reservas y cotización directo por WhatsApp.</p>
+<div class="tags"><i>Estudio de tatuajes</i><i>Remoción láser</i><i>Galería</i><i>Reservas WhatsApp</i></div>
+<a class="go" href="https://www.loyaltycali.com" target="_blank" rel="noopener">Ver sitio en vivo <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
+</div>
+</article>
+<article class="work reveal">
+<div class="shot">
+<div class="mock">
+<div class="bar"><span></span><span></span><span></span><em>martinbodypiercing.com</em></div>
+<div class="page">
+<div class="ln w1"></div>
+<div class="ln w2"></div>
+<div class="pill">Agendar por WhatsApp</div>
+<div class="thumbs"><i></i><i></i><i></i></div>
+<div class="bubble"><b>Joyería premium</b>Titanio, oro, diamante y platino · bioseguridad certificada</div>
+</div>
+</div>
+</div>
+<div class="body">
+<span class="kicker"><span class="live"></span>En producción</span>
+<h3>Martin Body Piercing — Estudio de piercings</h3>
+<p>Sitio del estudio de <b>piercings</b> con procedimientos esterilizados y estética japonesa: catálogo por tipo de perforación, joyería en titanio, oro, diamante y platino, galería de resultados y agendamiento por WhatsApp.</p>
+<div class="tags"><i>Catálogo de piercings</i><i>Joyería premium</i><i>Bioseguridad</i><i>Reservas WhatsApp</i></div>
+<a class="go" href="https://martinbodypiercing.com" target="_blank" rel="noopener">Ver sitio en vivo <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
 </div>
 </article>
 </div>
@@ -1134,6 +1195,21 @@ var cur=document.documentElement.getAttribute('data-theme');
 var next = cur==='dark' ? 'light' : 'dark';
 document.documentElement.setAttribute('data-theme',next);
 });
+
+/* ---------- MOBILE MENU (hamburger) ---------- */
+var mt=document.getElementById('menuToggle');
+if(mt){
+mt.addEventListener('click',function(){
+var isOpen=nav.classList.toggle('nav-open');
+mt.setAttribute('aria-expanded',isOpen?'true':'false');
+});
+document.querySelectorAll('.nav-links a').forEach(function(a){
+a.addEventListener('click',function(){nav.classList.remove('nav-open');mt.setAttribute('aria-expanded','false');});
+});
+window.addEventListener('resize',function(){
+if(window.innerWidth>940){nav.classList.remove('nav-open');mt.setAttribute('aria-expanded','false');}
+});
+}
 })();
 </script>
 
