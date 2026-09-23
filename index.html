@@ -292,6 +292,26 @@ header.nav.nav-open .nav-links{display:flex}
 .work .go svg{width:15px;height:15px;transition:transform 0.25s;}
 .work .go:hover svg{transform:translate(2px,-2px);}
 .work .go.off{color:var(--muted-2);}
+/* ---- compact work cards with header-style image ---- */
+.work-grid{grid-template-columns:repeat(3,1fr);gap:18px}
+.work-shot{position:relative;display:block;aspect-ratio:16/9;overflow:hidden;background:#0a1020;text-decoration:none}
+.work-shot img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top center;display:block;transition:transform .6s cubic-bezier(.2,.7,.2,1)}
+.work:hover .work-shot img{transform:scale(1.06)}
+.work-shot .ws{position:absolute;inset:0;display:flex;flex-direction:column;background:radial-gradient(120% 90% at 50% -12%,color-mix(in srgb,var(--a,#1E6BFF) 46%,transparent),transparent 62%),linear-gradient(160deg,#0c1730,#0a1020)}
+.work-shot .ws .tb{display:flex;align-items:center;gap:6px;padding:9px 12px;background:rgba(8,14,28,.55);border-bottom:1px solid rgba(150,180,255,.14)}
+.work-shot .ws .tb i{width:8px;height:8px;border-radius:50%;background:#33456b;flex:0 0 auto}
+.work-shot .ws .tb em{margin-left:8px;font-style:normal;font-family:var(--mono);font-size:10.5px;color:#9fb2d8;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.work-shot .ws .hero{flex:1;display:flex;flex-direction:column;justify-content:center;gap:11px;padding:0 22px}
+.work-shot .ws .hero .k{font-family:var(--mono);font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:color-mix(in srgb,var(--a,#1E6BFF) 58%,#fff)}
+.work-shot .ws .hero b{font-size:22px;font-weight:800;letter-spacing:-.02em;line-height:1.06;color:#fff;max-width:90%}
+.work-shot .ws .hero .cta{align-self:flex-start;font-family:var(--mono);font-size:10.5px;font-weight:700;color:#0a1020;background:var(--a,#1E6BFF);padding:7px 13px;border-radius:999px}
+.work-shot::after{content:"";position:absolute;left:0;right:0;bottom:0;height:42%;background:linear-gradient(180deg,transparent,rgba(6,12,26,.32));pointer-events:none}
+.work .body{padding:18px 20px 20px}
+.work h3{font-size:17px;margin:12px 0 8px;line-height:1.22}
+.work .body p{font-size:13.5px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.work .tags{margin-top:14px}
+.work .tags i{font-size:10.5px}
+.work .go{padding-top:16px;font-size:13.5px}
 .lab-eyebrow{color:var(--muted-2);font-family:var(--mono);font-size:11.5px;letter-spacing:0.12em;text-transform:uppercase;font-weight:500;}
 .lab-stats{display:flex;flex-wrap:wrap;gap:14px;margin:-24px 0px 34px;}
 .lab-stats .s{flex:1 1 0%;min-width:150px;border:1px solid var(--line);border-radius:12px;padding:16px 18px;background:color-mix(in srgb,var(--surface) 55%,transparent);}
@@ -352,11 +372,13 @@ header.nav.nav-open .nav-links{display:flex}
 @keyframes blip{0%,100%{box-shadow:rgba(55,227,155,0.18) 0px 0px 0px 3px;}50%{box-shadow:rgba(55,227,155,0.03) 0px 0px 0px 7px;}}
 @keyframes ripple{0%{transform:scale(1);opacity:0.75;}100%{transform:scale(1.5);opacity:0;}}
 @media (max-width:940px){
-.work-grid{grid-template-columns:1fr;}
+.work-grid{grid-template-columns:repeat(2,1fr);}
 .lab-grid{grid-template-columns:repeat(2,1fr);}
 .lab.wide{grid-column:span 2;}
 }
 @media (max-width:560px){
+.work-grid{grid-template-columns:1fr;}
+.work-shot .ws .hero b{font-size:20px;}
 .lab-grid{grid-template-columns:1fr;}
 .lab.wide{grid-column:span 1;}
 .lab.wide .lab-media{aspect-ratio:16 / 10;}
@@ -485,18 +507,9 @@ header.nav.nav-open .nav-links{display:flex}
 </div>
 <div class="work-grid">
 <article class="work reveal">
-<div class="shot">
-<div class="mock">
-<div class="bar"><span></span><span></span><span></span><em>viafaraboris.com</em></div>
-<div class="page">
-<div class="ln w1"></div>
-<div class="ln w2"></div>
-<div class="pill">Reservar en línea</div>
-<div class="thumbs"><i></i><i></i><i></i></div>
-<div class="bubble"><b>Bori</b>¿Cuántas sesiones de PRP necesito?</div>
-</div>
-</div>
-</div>
+<a class="work-shot" href="https://viafaraboris.com" target="_blank" rel="noopener">
+<img src="assets/boris.jpg" alt="Dr. Boris Viafara — sitio web" loading="lazy">
+</a>
 <div class="body">
 <span class="kicker"><span class="live"></span>En producción · Buga</span>
 <h3>Dr. Boris Viafara — Cirugía cosmética</h3>
@@ -506,15 +519,10 @@ header.nav.nav-open .nav-links{display:flex}
 </div>
 </article>
 <article class="work reveal">
-<div class="shot">
-<div class="mock dark">
-<div class="bar"><span></span><span></span><span></span><em>chatter · n8n</em></div>
-<div class="page">
-<div class="msg in">holaa, ¿qué tienes hoy? 👀</div>
-<div class="msg out">Justo estaba pensando en ti… te mandé algo 🔥</div>
-<div class="nodes"><i></i><i></i><i></i><i></i></div>
-<div class="tick">PPV enviado a 248 fans activos</div>
-</div>
+<div class="work-shot" style="--a:#4E8CFF">
+<div class="ws">
+<div class="tb"><i></i><i></i><i></i><em>proyecto privado</em></div>
+<div class="hero"><span class="k">OnlyFans · Automatización</span><b>Responde a tus fans 24/7</b><span class="cta">Automático</span></div>
 </div>
 </div>
 <div class="body">
@@ -526,18 +534,9 @@ header.nav.nav-open .nav-links{display:flex}
 </div>
 </article>
 <article class="work reveal">
-<div class="shot">
-<div class="mock">
-<div class="bar"><span></span><span></span><span></span><em>loyaltycali.com</em></div>
-<div class="page">
-<div class="ln w1"></div>
-<div class="ln w2"></div>
-<div class="pill">Agendar valoración</div>
-<div class="thumbs"><i></i><i></i><i></i></div>
-<div class="bubble"><b>Antes / Después</b>Remoción láser con plan por sesiones a tu medida</div>
-</div>
-</div>
-</div>
+<a class="work-shot" href="https://www.loyaltycali.com" target="_blank" rel="noopener">
+<img src="assets/loyalty.jpg" alt="Loyalty Tattoo Cali — sitio web" loading="lazy">
+</a>
 <div class="body">
 <span class="kicker"><span class="live"></span>En producción · Cali</span>
 <h3>Loyalty Tattoo Cali — Tatuajes &amp; remoción láser</h3>
@@ -547,18 +546,9 @@ header.nav.nav-open .nav-links{display:flex}
 </div>
 </article>
 <article class="work reveal">
-<div class="shot">
-<div class="mock">
-<div class="bar"><span></span><span></span><span></span><em>martinbodypiercing.com</em></div>
-<div class="page">
-<div class="ln w1"></div>
-<div class="ln w2"></div>
-<div class="pill">Agendar por WhatsApp</div>
-<div class="thumbs"><i></i><i></i><i></i></div>
-<div class="bubble"><b>Joyería premium</b>Titanio, oro, diamante y platino · bioseguridad certificada</div>
-</div>
-</div>
-</div>
+<a class="work-shot" href="https://martinbodypiercing.com" target="_blank" rel="noopener">
+<img src="assets/martin.jpg" alt="Martin Body Piercing — sitio web" loading="lazy">
+</a>
 <div class="body">
 <span class="kicker"><span class="live"></span>En producción</span>
 <h3>Martin Body Piercing — Estudio de piercings</h3>
